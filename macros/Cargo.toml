@@ -1,0 +1,12 @@
+[package]
+
+name = "glassful_macros"
+version = "0.0.1"
+authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
+
+[lib]
+name = "glassful_macros"
+plugin = true
+
+[dependencies.glassful]
+path = ".."
