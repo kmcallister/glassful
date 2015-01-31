@@ -1,0 +1,5 @@
+[package]
+
+name = "glassful"
+version = "0.0.1"
+authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
