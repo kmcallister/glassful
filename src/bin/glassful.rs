@@ -1,4 +1,5 @@
 #![feature(io)]
+#![deny(warnings)]
 
 use std::old_io as io;
 

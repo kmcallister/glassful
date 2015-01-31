@@ -1,4 +1,5 @@
 #![feature(rustc_private, core)]
+#![deny(warnings)]
 
 extern crate syntax;
 
