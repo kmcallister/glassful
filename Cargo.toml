@@ -3,3 +3,7 @@
 name = "glassful"
 version = "0.0.1"
 authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
+repository = "https://github.com/kmcallister/glassful"
+readme = "README.md"
+license = "MIT/Apache-2.0"
+description = "Rust-like syntax for OpenGL Shading Language"

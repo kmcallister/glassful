@@ -3,6 +3,8 @@
 name = "glassful_macros"
 version = "0.0.1"
 authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
+license = "MIT/Apache-2.0"
+description = "Provides the glassful! macro"
 
 [lib]
 name = "glassful_macros"

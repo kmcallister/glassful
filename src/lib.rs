@@ -19,6 +19,7 @@ mod block;
 
 const NAME: &'static str = "<glassful shader>";
 
+/// Translate a glassful program to GLSL, or panic.
 pub fn translate(source: String) -> String {
     // parse
     let sess = parse::new_parse_sess();
@@ -67,6 +68,10 @@ pub fn translate(source: String) -> String {
     out
 }
 
+/// Translate a glassful program to GLSL, or return `None'.
+///
+/// Because the `libsyntax` parser uses `panic!` internally,
+/// this spawns a new thread for the duration of the call.
 pub fn try_translate(source: String) -> Option<String> {
     Thread::scoped(move || {
         translate(source)
