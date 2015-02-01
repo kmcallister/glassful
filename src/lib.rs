@@ -1,9 +1,10 @@
-#![feature(rustc_private, core)]
+#![feature(rustc_private, core, std_misc)]
 #![deny(warnings)]
 
 extern crate syntax;
 
 use std::borrow::ToOwned;
+use std::thread::Thread;
 use syntax::parse;
 use syntax::ext::expand;
 use syntax::attr::AttrMetaMethods;
@@ -64,4 +65,10 @@ pub fn translate(source: String) -> String {
     diag.handler.abort_if_errors();
 
     out
+}
+
+pub fn try_translate(source: String) -> Option<String> {
+    Thread::scoped(move || {
+        translate(source)
+    }).join().ok()
 }

@@ -1,13 +1,12 @@
 #![crate_type="dylib"]
 #![feature(plugin_registrar)]
-#![feature(rustc_private, core, std_misc)]
+#![feature(rustc_private, core)]
 #![deny(warnings)]
 
 extern crate syntax;
 extern crate rustc;
 extern crate glassful;
 
-use std::thread::Thread;
 use syntax::ast;
 use syntax::parse::token;
 use syntax::codemap::Span;
@@ -53,16 +52,12 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
         Some(src) => src,
     };
 
-    let res = Thread::scoped(move || {
-        glassful::translate(src)
-    }).join();
-
-    match res {
-        Err(_) => {
+    match glassful::try_translate(src) {
+        None => {
             cx.span_err(outer_span, "translation failed");
             DummyResult::expr(outer_span)
         }
-        Ok(res) => {
+        Some(res) => {
             let interned = token::intern_and_get_ident(&res[]);
             MacExpr::new(cx.expr_str(inner_span, interned))
         }
