@@ -1,0 +1,21 @@
+[package]
+
+name = "glassful-gradient-demo"
+version = "0.0.1"
+authors = ["Keegan McAllister <mcallister.keegan@gmail.com>"]
+
+[[bin]]
+name = "glassful-gradient-demo"
+path = "main.rs"
+
+[dependencies.glutin]
+git = "https://github.com/tomaka/glutin"
+
+[dependencies.glium]
+git = "https://github.com/tomaka/glium"
+
+[dependencies.glium_macros]
+git = "https://github.com/tomaka/glium"
+
+[dependencies.glassful_macros]
+path = "../../macros"
