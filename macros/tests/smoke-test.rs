@@ -9,9 +9,9 @@ const TEST_PROG: &'static str = glassful! {
 
     static foo: f32 = 3.0;
 
-    #[varying] static zed: vec2 = undef;
-    #[uniform] static prev_frame: sampler2D = undef;
-    #[uniform] static _p_scale: f32 = undef;
+    #[varying] static zed: vec2 = UNINIT;
+    #[uniform] static prev_frame: sampler2D = UNINIT;
+    #[uniform] static _p_scale: f32 = UNINIT;
 
     fn complex_to_tex(p: vec2) -> vec2 {
         (0.5/_p_scale)*p + vec2(0.5, 0.5)
@@ -29,7 +29,7 @@ const TEST_PROG: &'static str = glassful! {
         check!(x) && check!(y)
     }
 
-    #[uniform] static param: vec2 = undef;
+    #[uniform] static param: vec2 = UNINIT;
 
     fn main() {
         let color: vec3;
@@ -45,7 +45,7 @@ const TEST_PROG: &'static str = glassful! {
         gl_FragColor = vec4(color, 1.0);
     }
 
-    static _unused: f32 = 0.0;
+    const _work_around_rust_21825: f32 = 0.0;
 };
 
 #[test]

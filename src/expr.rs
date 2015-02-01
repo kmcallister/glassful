@@ -94,10 +94,11 @@ pub fn translate(sess: &ParseSess,
         }
 
         ast::ExprAssign(ref lhs, ref rhs) => {
+            write!(out, "(").unwrap();
             translate(sess, out, &**lhs);
             write!(out, " = ").unwrap();
             translate(sess, out, &**rhs);
-            write!(out, ";\n").unwrap();
+            write!(out, ")").unwrap();
         }
 
         ast::ExprRet(ref val) => {

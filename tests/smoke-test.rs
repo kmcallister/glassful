@@ -10,9 +10,9 @@ const TEST_PROG: &'static str = r#"
 
 static foo: f32 = 3.0;
 
-#[varying] static zed: vec2 = undef;
-#[uniform] static prev_frame: sampler2D = undef;
-#[uniform] static _p_scale: f32 = undef;
+#[varying] static zed: vec2 = UNINIT;
+#[uniform] static prev_frame: sampler2D = UNINIT;
+#[uniform] static _p_scale: f32 = UNINIT;
 
 fn complex_to_tex(p: vec2) -> vec2 {
     (0.5/_p_scale)*p + vec2(0.5, 0.5)
@@ -30,7 +30,7 @@ fn in_bounds(p: vec2) -> bool {
     check!(x) && check!(y)
 }
 
-#[uniform] static param: vec2 = undef;
+#[uniform] static param: vec2 = UNINIT;
 
 fn main() {
     let color: vec3;
