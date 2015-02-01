@@ -1,3 +1,4 @@
+use std::fmt::Writer;
 use syntax::ast;
 use syntax::abi;
 use syntax::parse::ParseSess;
@@ -17,6 +18,12 @@ pub fn translate(sess: &ParseSess, out: &mut String, item: &ast::Item) {
                 _ => diag.span_err(item.span, "variables are implicitly mutable"),
             }
 
+            ::var::translate(sess, out, &item.attrs[], item.ident,
+                             &**ty, Some(&**expr));
+        }
+
+        ast::ItemConst(ref ty, ref expr) => {
+            write!(out, "const ").unwrap();
             ::var::translate(sess, out, &item.attrs[], item.ident,
                              &**ty, Some(&**expr));
         }
