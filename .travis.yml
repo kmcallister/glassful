@@ -1,0 +1,6 @@
+sudo: false
+language: rust
+script:
+    - cargo test
+    - cd macros
+    - cargo test

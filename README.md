@@ -1,5 +1,7 @@
 # Rust-like syntax for GLSL
 
+[![Build Status](https://travis-ci.org/kmcallister/glassful.svg?branch=master)](https://travis-ci.org/kmcallister/glassful)
+
 glassful translates a small subset of Rust to [OpenGL Shading Language][].
 
 Besides one's personal preferences regarding Rust-like vs. C-like syntax, this
