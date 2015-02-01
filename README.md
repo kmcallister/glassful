@@ -26,7 +26,7 @@ the same in all three cases.
 ### As a macro
 
 ```rust
-#[plugin] extern crate glassful_macros;
+#[plugin] #[no_link] extern crate glassful_macros;
 
 const VERTEX: &'static str = glassful! {
     #![version="110"]
