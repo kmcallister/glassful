@@ -46,11 +46,11 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
     };
 
     let src = match cx.codemap().span_to_snippet(inner_span) {
-        None => {
-            cx.span_err(inner_span, "can't extract source snippet");
+        Err(e) => {
+            cx.span_err(inner_span, &format!("can't extract source snippet: {:?}", e)[]);
             return DummyResult::expr(inner_span);
         }
-        Some(src) => src,
+        Ok(src) => src,
     };
 
     match glassful::try_translate(src) {

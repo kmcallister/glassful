@@ -44,8 +44,6 @@ const TEST_PROG: &'static str = glassful! {
 
         gl_FragColor = vec4(color, 1.0);
     }
-
-    const _work_around_rust_21825: f32 = 0.0;
 };
 
 #[test]

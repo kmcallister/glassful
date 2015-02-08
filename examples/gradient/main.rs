@@ -1,5 +1,5 @@
 #![feature(plugin)]
-#![feature(std_misc, io)]
+#![feature(std_misc, io, core)]
 #![deny(warnings)]
 
 #[plugin] #[no_link] extern crate glium_macros;
@@ -31,8 +31,6 @@ const VERTEX: &'static str = glassful! {
         gl_Position = vec4(position, 0.0, 1.0);
         color = vec3(0.5*(position + vec2(1.0, 1.0)), 0.0);
     }
-
-    const _work_around_rust_21825: f32 = 0.0;
 };
 
 const FRAGMENT: &'static str = glassful! {
@@ -43,8 +41,6 @@ const FRAGMENT: &'static str = glassful! {
     fn main() {
         gl_FragColor = vec4(color, 1.0);
     }
-
-    const _work_around_rust_21825: f32 = 0.0;
 };
 
 pub fn main() {

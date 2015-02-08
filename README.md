@@ -53,11 +53,7 @@ const FRAGMENT: &'static str = glassful! {
 let program = glium::Program::from_source(&display, VERTEX, FRAGMENT, None);
 ```
 
-*n.b.*: This will not work until [Rust PR 21825][] is merged.  See
-`examples/gradient/` for a full glium/glutin example, which also works around
-that bug.
-
-[Rust PR 21825]: https://github.com/rust-lang/rust/pull/21825
+See `examples/gradient/` for a full glium/glutin example.
 
 ### As an external program
 
