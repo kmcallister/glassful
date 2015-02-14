@@ -41,7 +41,7 @@ pub fn translate(source: String) -> String {
                 if glsl_version.is_some() {
                     diag.span_err(attr.span, "version given twice");
                 }
-                glsl_version = Some(val.get().to_owned());
+                glsl_version = Some((*val).to_string());
             } else {
                 diag.span_err(attr.span, "version not given");
             }
