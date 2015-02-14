@@ -1,7 +1,6 @@
 #![feature(plugin)]
+#![plugin(glassful_macros)]
 #![deny(warnings)]
-
-#[plugin] #[no_link] extern crate glassful_macros;
 
 #[allow(dead_code)]
 const TEST_PROG: &'static str = glassful! {

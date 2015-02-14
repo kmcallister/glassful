@@ -2,8 +2,8 @@
 #![feature(std_misc, io, core)]
 #![deny(warnings)]
 
-#[plugin] #[no_link] extern crate glium_macros;
-#[plugin] #[no_link] extern crate glassful_macros;
+#![plugin(glium_macros)]
+#![plugin(glassful_macros)]
 
 extern crate glutin;
 #[macro_use] extern crate glium;
