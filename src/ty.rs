@@ -1,4 +1,4 @@
-use std::fmt::Writer;
+use std::fmt::Write;
 use syntax::ast;
 use syntax::parse::ParseSess;
 use syntax::attr::AttrMetaMethods;
