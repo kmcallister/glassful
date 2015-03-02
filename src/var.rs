@@ -25,7 +25,7 @@ pub fn translate(sess: &ParseSess,
     // The special ident 'UNINIT' means no initializer.
     // Rust's syntax does not allow this otherwise on statics.
     if let Some(i) = init {
-        if let ast::ExprPath(ref p) = i.node {
+        if let ast::ExprPath(_, ref p) = i.node {
             if let Some(s) = ::util::simple_path(p) {
                 if &s[..] == "UNINIT" {
                     init = None;
