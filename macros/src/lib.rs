@@ -47,7 +47,7 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
 
     let src = match cx.codemap().span_to_snippet(inner_span) {
         Err(e) => {
-            cx.span_err(inner_span, &format!("can't extract source snippet: {:?}", e)[]);
+            cx.span_err(inner_span, &format!("can't extract source snippet: {:?}", e)[..]);
             return DummyResult::expr(inner_span);
         }
         Ok(src) => src,
@@ -59,7 +59,7 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
             DummyResult::expr(outer_span)
         }
         Some(res) => {
-            let interned = token::intern_and_get_ident(&res[]);
+            let interned = token::intern_and_get_ident(&res[..]);
             MacExpr::new(cx.expr_str(inner_span, interned))
         }
     }
