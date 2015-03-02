@@ -1,10 +1,10 @@
-#![feature(rustc_private, core, std_misc)]
+#![feature(rustc_private)]
 #![deny(warnings)]
 
 extern crate syntax;
 
 use std::borrow::ToOwned;
-use std::thread::Thread;
+use std::thread;
 use syntax::parse;
 use syntax::ext::expand;
 use syntax::attr::AttrMetaMethods;
@@ -74,6 +74,6 @@ pub fn translate(source: String) -> String {
 /// this spawns a new thread for the duration of the call.
 pub fn try_translate(source: String) -> Option<String> {
     Option::Some(
-        Thread::scoped(move || {translate(source)})
+        thread::scoped(move || {translate(source)})
             .join())
 }
