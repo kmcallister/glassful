@@ -18,7 +18,7 @@ pub fn translate(sess: &ParseSess,
                 diag.span_err(ty.span, "can't translate qualified / parametrized name");
             }
             Some(name) => {
-                let name = match &name[] {
+                let name = match &name[..] {
                     "f32" => "float",
                     name => name,
                 };

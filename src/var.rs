@@ -27,7 +27,7 @@ pub fn translate(sess: &ParseSess,
     if let Some(i) = init {
         if let ast::ExprPath(ref p) = i.node {
             if let Some(s) = ::util::simple_path(p) {
-                if &s[] == "UNINIT" {
+                if &s[..] == "UNINIT" {
                     init = None;
                 }
             }
