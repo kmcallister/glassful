@@ -55,7 +55,7 @@ pub fn translate(sess: &ParseSess,
             }
         },
 
-        ast::ExprPath(ref p) => match ::util::simple_path(p) {
+        ast::ExprPath(_, ref p) => match ::util::simple_path(p) {
             Some(name) => {
                 let name = match &name[..] {
                     "mod_" => "mod",
