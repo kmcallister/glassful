@@ -73,7 +73,7 @@ pub fn translate(source: String) -> String {
 /// Because the `libsyntax` parser uses `panic!` internally,
 /// this spawns a new thread for the duration of the call.
 pub fn try_translate(source: String) -> Option<String> {
-    Thread::scoped(move || {
-        translate(source)
-    }).join().ok()
+    Option::Some(
+        Thread::scoped(move || {translate(source)})
+            .join())
 }
