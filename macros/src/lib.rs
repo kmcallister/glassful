@@ -11,7 +11,7 @@ extern crate glassful;
 use syntax::ast;
 use syntax::parse::token;
 use syntax::codemap::Span;
-use syntax::ext::base::{ExtCtxt, MacResult, MacExpr, DummyResult};
+use syntax::ext::base::{ExtCtxt, MacEager, MacResult, DummyResult};
 use syntax::ext::build::AstBuilder;
 use rustc::plugin::Registry;
 
@@ -60,7 +60,7 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
         }
         Some(res) => {
             let interned = token::intern_and_get_ident(&res[..]);
-            MacExpr::new(cx.expr_str(inner_span, interned))
+            MacEager::expr(cx.expr_str(inner_span, interned))
         }
     }
 }
