@@ -13,7 +13,7 @@ pub fn translate(sess: &ParseSess,
             write!(out, "void").unwrap();
         }
 
-        ast::TyPath(ref p, _) => match ::util::simple_path(p) {
+        ast::TyPath(_, ref p) => match ::util::simple_path(p) {
             None => {
                 diag.span_err(ty.span, "can't translate qualified / parametrized name");
             }
