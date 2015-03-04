@@ -18,13 +18,13 @@ pub fn translate(sess: &ParseSess, out: &mut String, item: &ast::Item) {
                 _ => diag.span_err(item.span, "variables are implicitly mutable"),
             }
 
-            ::var::translate(sess, out, &item.attrs[], item.ident,
+            ::var::translate(sess, out, &item.attrs[..], item.ident,
                              &**ty, Some(&**expr));
         }
 
         ast::ItemConst(ref ty, ref expr) => {
             write!(out, "const ").unwrap();
-            ::var::translate(sess, out, &item.attrs[], item.ident,
+            ::var::translate(sess, out, &item.attrs[..], item.ident,
                              &**ty, Some(&**expr));
         }
 
@@ -63,7 +63,7 @@ pub fn translate(sess: &ParseSess, out: &mut String, item: &ast::Item) {
                 ast::Return(ref t) => Some(&**t),
             };
 
-            ::fun::translate(sess, out, item.ident, &inputs[], output, &**block);
+            ::fun::translate(sess, out, item.ident, &inputs[..], output, &**block);
         }
 
         ast::ItemMac(_) => {
