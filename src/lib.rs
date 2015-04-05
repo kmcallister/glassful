@@ -1,4 +1,4 @@
-#![feature(rustc_private)]
+#![feature(rustc_private, slice_patterns)]
 #![deny(warnings)]
 
 extern crate syntax;
