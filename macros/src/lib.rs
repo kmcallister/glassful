@@ -1,5 +1,5 @@
 #![crate_type="dylib"]
-#![feature(plugin_registrar)]
+#![feature(plugin_registrar, slice_patterns)]
 #![feature(rustc_private, core)]
 #![deny(warnings)]
 #![allow(unused_features)]
