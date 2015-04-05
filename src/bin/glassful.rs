@@ -1,12 +1,13 @@
-#![feature(old_io)]
 #![deny(warnings)]
-
-use std::old_io as io;
 
 extern crate glassful;
 
+use std::io;
+use std::io::Read;
+
 pub fn main() {
-    let prog = io::stdin().read_to_end().unwrap();
-    let prog = String::from_utf8(prog).unwrap();
-    print!("{}", glassful::translate(prog));
+    let mut prog = String::new();
+    if io::stdin().read_to_string(&mut prog).is_ok() {
+        print!("{}", glassful::translate(prog));
+    }
 }
