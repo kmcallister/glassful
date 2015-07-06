@@ -1,11 +1,11 @@
-#![feature(rustc_private, scoped, slice_patterns)]
+#![feature(rustc_private, slice_patterns)]
 #![deny(warnings)]
 
 extern crate syntax;
 
 use std::borrow::ToOwned;
 use std::thread;
-use syntax::parse;
+use syntax::parse::{self, ParseSess};
 use syntax::ext::expand;
 use syntax::attr::AttrMetaMethods;
 
@@ -22,7 +22,7 @@ const NAME: &'static str = "<glassful shader>";
 /// Translate a glassful program to GLSL, or panic.
 pub fn translate(source: String) -> String {
     // parse
-    let sess = parse::new_parse_sess();
+    let sess = ParseSess::new();
     let diag = &sess.span_diagnostic;
     let krate = parse::parse_crate_from_source_str(
         NAME.to_owned(), source, vec![], &sess);
@@ -73,7 +73,8 @@ pub fn translate(source: String) -> String {
 /// Because the `libsyntax` parser uses `panic!` internally,
 /// this spawns a new thread for the duration of the call.
 pub fn try_translate(source: String) -> Option<String> {
-    Option::Some(
-        thread::scoped(move || {translate(source)})
-            .join())
+    match thread::spawn(move || { translate(source) }).join() {
+        Ok(s) => Some(s),
+        Err(_) => None
+    }
 }

@@ -28,7 +28,7 @@ pub fn translate(sess: &ParseSess, out: &mut String, item: &ast::Item) {
                              &**ty, Some(&**expr));
         }
 
-        ast::ItemFn(ref decl, unsafety, abi, ref generics, ref block) => {
+        ast::ItemFn(ref decl, unsafety, _, abi, ref generics, ref block) => {
             for attr in item.attrs.iter() {
                 diag.span_err(attr.span, "no function attributes are supported");
             }
