@@ -1,25 +1,22 @@
 #![feature(plugin)]
-#![feature(std_misc, io, core)]
-#![deny(warnings)]
 
-#![plugin(glium_macros)]
 #![plugin(glassful_macros)]
 
-extern crate glutin;
 #[macro_use] extern crate glium;
 
 use glium::{DisplayBuild, Program, Surface};
 use glium::uniforms::EmptyUniforms;
 
-use std::old_io::timer;
 use std::time::Duration;
+use std::thread;
 use std::default::Default;
 
-#[vertex_format]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 struct Vertex {
     position: [f32; 2],
 }
+
+implement_vertex!(Vertex, position);
 
 const VERTEX: &'static str = glassful! {
     #![version="110"]
@@ -44,17 +41,17 @@ const FRAGMENT: &'static str = glassful! {
 };
 
 pub fn main() {
-    let dpy = glutin::WindowBuilder::new().build_glium().unwrap();
+    let dpy = glium::glutin::WindowBuilder::new().build_glium().unwrap();
 
-    let vertex_buffer = glium::VertexBuffer::new(&dpy, vec![
+    let vertex_buffer = glium::VertexBuffer::new(&dpy, &vec![
         Vertex { position: [-1.0, -1.0] },
         Vertex { position: [-1.0,  1.0] },
         Vertex { position: [ 1.0,  1.0] },
         Vertex { position: [ 1.0, -1.0] },
-    ]);
+    ]).unwrap();
 
     let index_buffer = glium::IndexBuffer::new(&dpy,
-        glium::index::TrianglesList(vec![0u16, 1, 2, 2, 3, 0]));
+        glium::index::PrimitiveType::TrianglesList, &vec![0u16, 1, 2, 2, 3, 0]).unwrap();
 
     let program = Program::from_source(&dpy, VERTEX, FRAGMENT, None).unwrap();
 
@@ -62,13 +59,13 @@ pub fn main() {
         let mut target = dpy.draw();
         target.clear_color(0.0, 0.0, 0.0, 0.0);
         target.draw(&vertex_buffer, &index_buffer, &program,
-            EmptyUniforms, &Default::default()).unwrap();
-        target.finish();
+            &EmptyUniforms, &Default::default()).unwrap();
+        target.finish().unwrap();
 
-        timer::sleep(Duration::milliseconds(20));
+        thread::sleep(Duration::from_millis(20));
 
         for event in dpy.poll_events() {
-            if let glutin::Event::Closed = event {
+            if let glium::glutin::Event::Closed = event {
                 return;
             }
         }
