@@ -6,6 +6,7 @@ extern crate syntax;
 use std::borrow::ToOwned;
 use std::thread;
 use syntax::parse::{self, ParseSess};
+use syntax::ext::base::ExtCtxt;
 use syntax::ext::expand;
 use syntax::attr::AttrMetaMethods;
 
@@ -27,11 +28,15 @@ pub fn translate(source: String) -> String {
     let krate = parse::parse_crate_from_source_str(
         NAME.to_owned(), source, vec![], &sess);
 
-    diag.handler.abort_if_errors();
+    diag.abort_if_errors();
+
 
     // expand macros
     let ecfg = expand::ExpansionConfig::default(NAME.to_owned());
-    let krate = expand::expand_crate(&sess, ecfg, vec![], vec![], krate);
+    let mut cfg_fg = Vec::new();
+    let ctxt = ExtCtxt::new(&sess, krate.config.clone(), ecfg, &mut cfg_fg);
+
+    let krate = expand::expand_crate(ctxt, Vec::new(), Vec::new(), krate).0;
 
     // process attributes
     let mut glsl_version = None;
@@ -50,7 +55,7 @@ pub fn translate(source: String) -> String {
         }
     }
 
-    diag.handler.abort_if_errors();
+    diag.abort_if_errors();
 
     // translate!
 
@@ -63,7 +68,7 @@ pub fn translate(source: String) -> String {
         item::translate(&sess, &mut out, &**item);
     }
 
-    diag.handler.abort_if_errors();
+    diag.abort_if_errors();
 
     out
 }

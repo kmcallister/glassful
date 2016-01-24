@@ -16,7 +16,7 @@ pub fn translate(sess: &ParseSess,
         Some(ty) => ::ty::translate(sess, out, ty),
     }
 
-    write!(out, " {}(", name.as_str()).unwrap();
+    write!(out, " {}(", name.name.as_str()).unwrap();
     for (i, &ast::Arg { ref ty, ref pat, ..}) in inputs.iter().enumerate() {
         if i != 0 {
             write!(out, ", ").unwrap();
