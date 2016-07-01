@@ -35,7 +35,7 @@ pub fn translate(sess: &ParseSess,
     }
 
     ::ty::translate(sess, out, ty);
-    write!(out, " {}", ident.as_str()).unwrap();
+    write!(out, " {}", ident.name).unwrap();
     if let Some(init) = init {
         write!(out, " = ").unwrap();
         ::expr::translate(sess, out, init);

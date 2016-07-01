@@ -5,15 +5,15 @@
 #![allow(unused_features)]
 
 extern crate syntax;
-extern crate rustc;
 extern crate glassful;
+extern crate rustc_plugin;
 
 use syntax::ast;
 use syntax::parse::token;
 use syntax::codemap::Span;
 use syntax::ext::base::{ExtCtxt, MacEager, MacResult, DummyResult};
 use syntax::ext::build::AstBuilder;
-use rustc::plugin::Registry;
+use rustc_plugin::Registry;
 
 #[plugin_registrar]
 pub fn plugin_registrar(reg: &mut Registry) {
@@ -32,8 +32,7 @@ fn expand(cx: &mut ExtCtxt, outer_span: Span, toks: &[ast::TokenTree])
             let first = first.get_span();
             let last = toks.iter().rev().next().unwrap().get_span();
             if first.expn_id != last.expn_id {
-                cx.span_err(first, "invocation is split between expansion contexts??");
-                cx.span_note(last, "last token is here");
+                cx.struct_span_err(first, "invocation is split between expansion contexts?").span_note(last, "last token is here");
                 return DummyResult::expr(outer_span);
             }
 

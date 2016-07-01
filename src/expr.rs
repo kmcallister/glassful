@@ -2,10 +2,10 @@ use std::fmt::Write;
 use syntax::ast;
 use syntax::parse::ParseSess;
 use syntax::codemap::Span;
-use syntax::diagnostic::SpanHandler;
+use syntax::errors::Handler;
 use syntax::attr::AttrMetaMethods;
 
-fn get_binop(diag: &SpanHandler, sp: Span, binop: ast::BinOp) -> &'static str {
+fn get_binop(diag: &Handler, sp: Span, binop: ast::BinOp) -> &'static str {
     match binop.node {
         ast::BiAdd => "+",
         ast::BiSub => "-",
@@ -26,7 +26,7 @@ fn get_binop(diag: &SpanHandler, sp: Span, binop: ast::BinOp) -> &'static str {
     }
 }
 
-fn get_unop(diag: &SpanHandler, sp: Span, unop: ast::UnOp) -> &'static str {
+fn get_unop(diag: &Handler, sp: Span, unop: ast::UnOp) -> &'static str {
     match unop {
         ast::UnNot => "!",
         ast::UnNeg => "-",
@@ -128,7 +128,7 @@ pub fn translate(sess: &ParseSess,
 
         ast::ExprField(ref lhs, id) => {
             translate(sess, out, &**lhs);
-            write!(out, ".{}", id.node.as_str()).unwrap();
+            write!(out, ".{}", id.node.name.as_str()).unwrap();
         }
 
         ast::ExprParen(ref inside) => translate(sess, out, &**inside),
